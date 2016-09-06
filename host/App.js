@@ -19,6 +19,10 @@ let array = new Array();
 
 let dragCardCall = 0;
 
+const exarray = [[1,"xxx"],
+				 [2,"yyy"],
+				 [3,"zzz"]];
+
 class App extends Component {
   constructor(props, context) {
     super(props, context)
@@ -78,6 +82,7 @@ class App extends Component {
     return (
 		<div>
 		<Box moveCard={this.moveCard} dragCard={this.dragCard}>
+		{array.map((dt,i) => <DroppedCard index={i} id={dt[0]} text={dt[1]}/>)}
 		</Box>
 		<div style={style}>
 			{cards.map((card, i) => {

@@ -1,4 +1,5 @@
 export default {
-	CARD: 'card'
+	CARD: 'card',
+	DRAGGED: 'dragged'
 };
 

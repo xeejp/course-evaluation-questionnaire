@@ -8,15 +8,15 @@ const mapStateToProps = ()=> {
 }
 
 const style = {
+  border: '1px dashed gray',
   height: 300,
   width: 300,
   marginRight: '1.5rem',
   marginBottom: '1.5rem',
-  color: 'white',
   textAlign: 'center',
   fontSize: '1rem',
   lineHeight: 'normal',
-  backgroundColor : '#222',
+  backgroundColor : 'white',
   position: 'relative'
 }
 
