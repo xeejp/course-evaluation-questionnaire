@@ -27,6 +27,7 @@ class App extends Component {
   constructor(props, context) {
     super(props, context)
 	this.moveCard = this.moveCard.bind(this);
+	this.dragDropCard = this.dragDropCard.bind(this);
     this.state = {
 	  cards: [{
         id: 1,
@@ -76,13 +77,28 @@ class App extends Component {
 	  dragCardCall++;
 	  console.log(JSON.stringify(array));
   }
+ 
+  dragDropCard(dragIndex, hoverIndex) {
+   const dragCard = array[dragIndex];
+		array.splice(dragIndex, 1);
+		array.splice(hoverIndex, 0, dragCard);
+	  this.setState(array);
+	  console.log(JSON.stringify(array));
+  }
+
   render() {
     const { cards } = this.state;
 
     return (
 		<div>
 		<Box moveCard={this.moveCard} dragCard={this.dragCard}>
-		{array.map((dt,i) => <DroppedCard index={i} id={dt[0]} text={dt[1]}/>)}
+		{array.map((dt,i) => <DroppedCard 
+			key={dt[0]} 
+			index={i} 
+			id={dt[0]} 
+			text={dt[1]}
+			dragDropCard={this.dragDropCard}
+			/>)}
 		</Box>
 		<div style={style}>
 			{cards.map((card, i) => {

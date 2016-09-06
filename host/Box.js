@@ -9,7 +9,7 @@ const mapStateToProps = ()=> {
 
 const style = {
   border: '1px dashed gray',
-  height: 300,
+  height: 400,
   width: 300,
   marginRight: '1.5rem',
   marginBottom: '1.5rem',
