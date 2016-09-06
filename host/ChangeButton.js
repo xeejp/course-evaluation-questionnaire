@@ -5,17 +5,15 @@ const mapStateToProps = ({ started }) => {
     return { started }
 }
 
-function start(){
-	sendData("start");
-}
+const arr = [{id:1,text:"aaaaa"}];
 
-function stop(){
-	sendData("stop");
+function pu(){
+	console.log(JSON.stringify(arr));
 }
 
 const ChangeButton = ({ started }) => started
-	? <button onClick={stop()}>stop</button>
-	: <button onClick={start()}>start</button>
+	? null
+	: <button onClick={pu()}>start</button>
 
 
 
