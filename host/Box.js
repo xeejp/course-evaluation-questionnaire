@@ -27,7 +27,6 @@ const boxTarget = {
 	const dragIndex = monitor.getItem().index;
     const hoverIndex = props.index;
 
-    props.moveCard(dragIndex, hoverIndex);
     props.dragCard(dragIndex, dragId, dragText);
 
   }

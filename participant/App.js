@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Information from './Information'
 
 const mapStateToProps = ({}) => ({
 })
@@ -17,7 +16,6 @@ class App extends Component {
 
   render() {
     return <div> 
-	  <Information />
     </div>
   }
 }

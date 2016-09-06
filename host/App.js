@@ -26,7 +26,7 @@ const exarray = [[1,"xxx"],
 class App extends Component {
   constructor(props, context) {
     super(props, context)
-	this.moveCard = this.moveCard.bind(this);
+	this.dragCard = this.dragCard.bind(this);
 	this.dragDropCard = this.dragDropCard.bind(this);
     this.state = {
 	  cards: [{
@@ -57,28 +57,28 @@ class App extends Component {
 
   componentDidMount() {
   }
-	moveCard(dragIndex, hoverIndex) {
-    const { cards } = this.state;
-    const dragCard = cards[dragIndex];
 
-    this.setState(update(this.state, {
-      cards: {
-        $splice: [
-          [dragIndex, 1]
-        ]
-      }
-    }));
-  }
+	dragCard(dragIndex, dragId, dragText){
 
-  dragCard(dragIndex, dragId, dragText){
-	  array[dragCardCall] = new Array();
-	  array[dragCardCall][0] = dragId;
-	  array[dragCardCall][1] = dragText;
-	  dragCardCall++;
-	  console.log(JSON.stringify(array));
-  }
- 
-  dragDropCard(dragIndex, hoverIndex) {
+		const { cards } = this.state;
+		const dragCard = cards[dragIndex];
+
+		array[dragCardCall] = new Array();
+		array[dragCardCall][0] = dragId;
+		array[dragCardCall][1] = dragText;
+		dragCardCall++;
+		console.log(JSON.stringify(array));
+
+		this.setState(update(this.state, {
+			cards: {
+				$splice: [
+					[dragIndex, 1]
+				]
+			}
+		}));
+	}
+
+	dragDropCard(dragIndex, hoverIndex) {
    const dragCard = array[dragIndex];
 		array.splice(dragIndex, 1);
 		array.splice(hoverIndex, 0, dragCard);
