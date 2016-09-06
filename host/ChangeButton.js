@@ -1,19 +1,22 @@
 import React, {Component }from 'react'
 import { connect } from 'react-redux'
 
-const mapStateToProps = ({}) => {
-    return {}
+const mapStateToProps = ({ started }) => {
+    return { started }
 }
 
-class ChangeButton extends Component {
-	render (){
-		return(
-		<div>
-			<button type="button">aaa</button>
-		</div>
-		);
-	}
+function start(){
+	sendData("start");
 }
+
+function stop(){
+	sendData("stop");
+}
+
+const ChangeButton = ({ started }) => started
+	? <button onClick={stop()}>stop</button>
+	: <button onClick={start()}>start</button>
+
 
 
 export default connect(mapStateToProps)(ChangeButton)

@@ -12,11 +12,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+	  sendData('fetchContents')
   }
 
   render() {
-    return <div>
-	   <Information />
+    return <div> 
+	  <Information />
     </div>
   }
 }

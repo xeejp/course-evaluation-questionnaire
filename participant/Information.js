@@ -24,4 +24,3 @@ const Information = ({ started }) => <div>
 
 export default connect(mapStateToProps)(Information)
 
-

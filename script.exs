@@ -18,8 +18,20 @@ defmodule YourApplication do
     {:ok, %{"data" => data}}
   end
 
-  def handle_received(data, _received) do
-    {:ok, %{"data" => data}}
+  def handle_received(data, %{"action"=>"start"}) do
+    data = %{data | started: true}
+    action = %{
+      type: "START"
+    }
+    {:ok, %{"data" => data, "host" => %{action: action}}}
+  end
+
+    def handle_received(data, %{"action"=>"stop"}) do
+    data = %{data | started: false}
+    action = %{
+      type: "STOP"
+    }
+    {:ok, %{"data" => data, "host" => %{action: action}}}
   end
 
   def handle_received(data, _action, _id) do
