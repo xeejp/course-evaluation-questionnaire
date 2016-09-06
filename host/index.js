@@ -22,7 +22,6 @@ const store = createStore(
   reducer,
   applyMiddleware(...middlewares)
 )
-
 sagaMiddleware.run(saga)
 
 var _experiment = new Experiment(_topic, _token);
