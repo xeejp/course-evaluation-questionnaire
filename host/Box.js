@@ -54,7 +54,7 @@ class Box extends Component{
 
 Box.propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
-	moveCard: PropTypes.func.isRequired
+	dragCard: PropTypes.func.isRequired
 };
 
 export default connect()(Box)
