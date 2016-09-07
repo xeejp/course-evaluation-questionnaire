@@ -23,6 +23,10 @@ const length     = data.length
 let minibox      = new Array(length);
 
 for(let i=0; i<length; i++){
+	array[i]   = new Array();
+	array[i][0]=-1;
+	array[i][1]="";
+	array[i][2]= i;
 	minibox[i] = i;
 }
 
@@ -39,16 +43,13 @@ class App extends Component {
   componentDidMount() {
   }
 
-	dragCard(dragIndex, dragId, dragText){
+	dragCard(dragIndex, dragId, dragText, hoverIndex){
 
-		array[dragCardCall] = new Array();
-		array[dragCardCall][0] = dragId;
-		array[dragCardCall][1] = dragText;
+		array[hoverIndex][0] = dragId;
+		array[hoverIndex][1] = dragText;
 		dragCardCall++;
-		console.log(JSON.stringify(array));		
-		console.log(JSON.stringify(minibox));		
 
-	    console.log(length)
+	    console.log(array[hoverIndex][0])
 
 		data.splice(dragIndex,1);
 		this.setState(data);
@@ -64,17 +65,26 @@ class App extends Component {
   render() {
     return (
 		<div>
-		<Box moveCard={this.moveCard} dragCard={this.dragCard}>
-			{minibox.map((dt, i) => <MiniBox index={i} >{i}</MiniBox>)}
+		<Box>
+			{minibox.map((dt, i) => <MiniBox 
+					 index={i}
+				     flag = {array[i][0]}
+					 key={dt[i]}
+					 dragCard={this.dragCard}
+				     ><DroppedCard 
+							key={array[i][2]} 
+							index={i} 
+							id={array[i][0]} 
+							text={array[i][1]}
+							dragDropCard={this.dragDropCard}/>
+				</MiniBox>)}
 		</Box>
 		<div style={style}>
 			{data.map((card, i) => <Card
 					 key={card[0]}
 					 index={i}
 					 id={card[0]}
-					 text={card[1]}
-					 />)}
-			
+					 text={card[1]} />)} 
 
 		</div>
 		</div>
