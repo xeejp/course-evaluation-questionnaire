@@ -9,7 +9,6 @@ const mapStateToProps = ()=> {
 
 const style = {
   border: '1px dashed gray',
-  backgroundColor: 'white',
   cursor: 'move',
   textAlign: 'left'
 }
@@ -29,22 +28,33 @@ const boxTarget = {
 function dropCollect(connect, monitor){
 	return {
    	  connectDropTarget: connect.dropTarget(),
+	  isOver: monitor.isOver()
 	}
 }
 
 class MiniBox extends Component{
 
 	render(){
-		const {index, flag, connectDropTarget } = this.props;
-		if(flag == -1){
+		const {flag, isOver, connectDropTarget } = this.props;
+		const color = isOver ? 1 : 0;
+
+		if(flag == -1 && color == 0){
 			return connectDropTarget(
-			<div style={{...style ,opacity:0.5}}>
+			<div style={{opacity:0.5}}>
 			{this.props.children}
 	        </div>
 		);}
+
+		else if(flag == -1 && color == 1){
+			return connectDropTarget(
+			<div style={{opacity:0.5, backgroundColor: 'yellow'}}>
+			{this.props.children}
+	        </div>
+		);}
+
 		else{
 			return (
-			<div>
+			<div style={{textAlign:'left'}}>
 			{this.props.children}
 	        </div>
 		);}
