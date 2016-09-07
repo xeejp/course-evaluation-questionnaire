@@ -72,7 +72,7 @@ function dropCollect(connect, monitor){
 class DroppedCard extends Component{
 	render(){
 		const { text, index, isDragging, connectDragSource, connectDropTarget } = this.props;
-		const opacity = isDragging ? 0 : 1;
+		const opacity = isDragging ? 0.5 : 1;
 
 		return connectDragSource(connectDropTarget(
 			<div style={{ ...style ,opacity}}>
