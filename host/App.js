@@ -91,7 +91,5 @@ class App extends Component {
 	);
 }
 }
-export default connect()(App)
 
 export default DragDropContext(HTML5Backend)(App)
-

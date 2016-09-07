@@ -67,6 +67,5 @@ MiniBox.propTypes = {
 	dragCard: PropTypes.func.isRequired
 };
 
-export default connect()(MiniBox)
 export default DropTarget(ItemTypes.CARD, boxTarget, dropCollect)(MiniBox)
 
