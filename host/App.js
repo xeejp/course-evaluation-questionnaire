@@ -17,9 +17,15 @@ const style = {
   width: 400
 };
 
-let array = new Array();
-
+let array        = new Array();
 let dragCardCall = 0;
+const length     = data.length
+let minibox      = new Array(length);
+
+for(let i=0; i<length; i++){
+	minibox[i] = i;
+}
+
 
 class App extends Component {
   constructor(props, context) {
@@ -39,7 +45,10 @@ class App extends Component {
 		array[dragCardCall][0] = dragId;
 		array[dragCardCall][1] = dragText;
 		dragCardCall++;
-		console.log(JSON.stringify(array));
+		console.log(JSON.stringify(array));		
+		console.log(JSON.stringify(minibox));		
+
+	    console.log(length)
 
 		data.splice(dragIndex,1);
 		this.setState(data);
@@ -50,21 +59,13 @@ class App extends Component {
 		array.splice(dragIndex, 1);
 		array.splice(hoverIndex, 0, dragCard);
 	  this.setState(array);
-	  console.log(JSON.stringify(array));
   }
 
   render() {
     return (
 		<div>
 		<Box moveCard={this.moveCard} dragCard={this.dragCard}>
-		{array.map((dt,i) => <DroppedCard 
-			key={dt[0]} 
-			index={i} 
-			id={dt[0]} 
-			text={dt[1]}
-			dragDropCard={this.dragDropCard}
-			/>)}
-
+			{minibox.map((dt, i) => <MiniBox index={i} >{i}</MiniBox>)}
 		</Box>
 		<div style={style}>
 			{data.map((card, i) => <Card

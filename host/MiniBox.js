@@ -13,7 +13,8 @@ const style = {
   marginBottom: '.5rem',
   backgroundColor: 'white',
   cursor: 'move',
-  opacity : 0.2
+  opacity : 0.5,
+  textAlign: 'left'
 }
 
 
