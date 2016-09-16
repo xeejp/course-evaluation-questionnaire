@@ -7,6 +7,8 @@ import { DropTarget } from 'react-dnd'
 const mapStateToProps = ()=> {
 }
 
+
+
 const style = {
   border: '1px dashed gray',
   cursor: 'move',
@@ -35,7 +37,7 @@ function dropCollect(connect, monitor){
 class MiniBox extends Component{
 
 	render(){
-		const {flag, isOver, connectDropTarget } = this.props;
+		const {flag, isOver, connectDropTarget} = this.props;
 		const color = isOver ? 1 : 0;
 
 		if(flag == -1 && color == 0){
@@ -63,9 +65,9 @@ class MiniBox extends Component{
 }
 
 MiniBox.propTypes = {
-    connectDropTarget: PropTypes.func.isRequired
+    connectDropTarget: PropTypes.func.isRequired,
+	dragCard: PropTypes.func.isRequired
 };
 
-export default connect()(MiniBox)
 export default DropTarget(ItemTypes.CARD, boxTarget, dropCollect)(MiniBox)
 

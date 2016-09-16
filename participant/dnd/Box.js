@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import EvaluationAxis from 'EvaluationAxis'
+import EvaluationAxis from './EvaluationAxis'
 
 const mapStateToProps = ()=> {
 }
@@ -20,14 +20,29 @@ const style = {
 class Box extends Component{
 
 	render(){
-		const { } = this.props;
-
-		return (
-			<div style={{...style }}>
-				<p>{EvaluationAxis[0]}</p>
+		const { Num, Len } = this.props;
+		if(Num < Len){
+			return (
+				<div style={{...style }}>
+				<p>Question{Num+1} {EvaluationAxis[Num]}</p>
 				{this.props.children}
-	        </div>
-		);
+				</div>
+			);
+		}
+		if(Num == Len){
+			return (
+				<div style={{...style }}>
+				<p>sort Evaluation Axis</p>
+				{this.props.children}
+				</div>
+			);
+		}
+		else{
+			return (
+			<p>dnd is finished </p>
+			)
+		}
+
 	}
 }
 

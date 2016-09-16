@@ -1,6 +1,5 @@
-import { put, take, call, select, fork } from 'redux-saga/effects'
-
-import { fetchContents, nextQuestion } from './actions'
+import { put, take, call, fork } from 'redux-saga/effects'
+import { fetchContents, submitAnswer, finishDescription } from './actions'
 
 function* fetchContentsSaga() {
   while (true) {
@@ -9,25 +8,25 @@ function* fetchContentsSaga() {
   }
 }
 
-function* nextQuestionSaga() {
-  const sequences = ["question1", "answered"]
-  while(true){
-    const { payload: { selected } } = yield take(`${nextQuestion}`)
-    const sequence = yield select(({ sequence }) => sequence)
-    let next = sequences[0]
-    for(let i = 0; i < sequences.length; i++) {
-      if(sequence == sequences[i]) {
-        next = sequences[(i + 1) % sequences.length]
-        break
-      }
-    }
-    yield call(sendData, 'next question', {selected: selected, next: next})
+function* finishDescriptionSaga() {
+  while (true) {
+    yield take(`${finishDescription}`)
+    yield call(sendData, 'finish description')
+	 
+  }
+}
+
+function* submitAnswerSaga() {
+  while (true) {
+    const { payload } = yield take(`${submitAnswer}`)
+    yield call(sendData, 'submit answer', payload)
   }
 }
 
 function* saga() {
   yield fork(fetchContentsSaga)
-  yield fork(nextQuestionSaga)
+  yield fork(finishDescriptionSaga)
+  yield fork(submitAnswerSaga)
 }
 
 export default saga

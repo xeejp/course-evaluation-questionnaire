@@ -1,0 +1,41 @@
+{
+"0": { 
+	"0": {
+		"0": "English", 
+		"1": "GameTheory", 
+		"2": "Art", 
+		"3": "Material", 
+		"4": "Music", 
+		"5": "Math", 
+		"6": "Electronic" 
+	}, 
+	"1": { 
+		"0": "Art", 
+		"1": "English", 
+		"2": "Music", 
+		"3": "Material", 
+		"4": "Math", 
+		"5": "GameTheory", 
+		"6": "Electronic" 
+	}, 
+	"2": { 
+		"0": "Material", 
+		"1": "English", 
+		"2": "GameTheory", 
+		"3": "Music", 
+		"4": "Math", 
+		"5": "Electronic", 
+		"6": "Art" 
+	}, 
+	"3": { 
+	"0": "Ease of understanding", 
+	"1": "Difficulty of Exam", 
+	"2": "Amusement" 
+	} 
+}, 
+"1": { 
+	"0": { 
+		"0": "Math", 
+		"1": "Music", "2": "Art", "3": "GameTheory", "4": "English", "5": "Material", "6": "Electronic" }, "1": { "0": "Music", "1": "English", "2": "Material", "3": "Electronic", "4": "Math", "5": "GameTheory", "6": "Art" }, "2": { "0": "Math", "1": "English", "2": "Material", "3": "Electronic", "4": "GameTheory", "5": "Music", "6": "Art" }, "3": { "0": "Ease of understanding", "1": "Difficulty of Exam", "2": "Amusement" } }, "2": { "0": { "0": "English", "1": "Electronic", "2": "Math", "3": "GameTheory", "4": "Art", "5": "Music", "6": "Material" }, "1": { "0": "Math", "1": "Electronic", "2": "Art", "3": "English", "4": "Music", "5": "Material", "6": "GameTheory" }, "2": { "0": "GameTheory", "1": "Music", "2": "English", "3": "Art", "4": "Electronic", "5": "Math", "6": "Material" }, "3": { "0": "Difficulty of Exam", "1": "Ease of understanding", "2": "Amusement" } } }
+
+

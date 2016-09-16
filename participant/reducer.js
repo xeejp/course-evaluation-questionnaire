@@ -1,20 +1,39 @@
-import { combineReducers } from 'redux'
+function reducer(state = {}, action) {
+	const { type, payload } = action
+	switch (type) {
 
-import concatenateReducers from 'redux-concatenate-reducers'
-import { handleAction, handleActions } from 'redux-actions'
+		case "FETCH_CONTENTS":
+			return Object.assign({}, state, {
+				page: action.page,
+				text: action.text,
+				status: action.status,
+				answered: action.answered,
+				joined: action.joined,
+			})
 
-const reducer = concatenateReducers([
-  handleActions({
-    'update contents': (_, { payload }) => payload,
-    'change page': (_, { payload }) => ({ page: payload }),
-    'joined': (_, { payload }) => ({ joined: payload }),
-    'next question': (_, { payload }) => ( { sequence: payload.next, question1: payload.selected } ),
-    'reset': (_, { payload }) => ( { sequence: payload.sequence, question1: payload.question1, active: payload.active, qswap: payload.qswap, question_text: payload.question_text }),
-    'result': (_, { payload: {one, two} }) => ({
-      one: one, two: two }),
-    'qupdate': (_, { payload }) => ({ question_text: payload }),
-  }),
-  handleAction('update contents', () => ({ loading: false }), { loading: true }),
-])
+		case "CHANGE_PAGE":
+			return Object.assign({}, state, {
+				page: action.page,
+				status: action.status,
+				answered: action.answered,
+				joined: action.joined,
+			})
+
+		case "ADD_USER":
+			return Object.assign({}, state, {
+				joined: action.joined,
+				questionNo: action.questionNo,
+			})
+		case "SUBMIT_ANSWER":
+			return Object.assign({}, state, {
+				joined: action.joined,
+				answered: action.answered,
+				res: action.res,
+			})
+
+		default:
+			return state
+	}
+}
 
 export default reducer

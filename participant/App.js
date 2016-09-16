@@ -1,13 +1,16 @@
-﻿import React, { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchContents } from './actions'
 
-import Pages from './Pages'
+import Waiting from './Waiting'
+import Description from './Description'
+import Question from './Question'
+import Result from './Result'
 
-const mapStateToProps = ({ loading, active }) => ({
-  loading,
-  active
+const mapStateToProps = ({page, status}) => ({
+  page,
+  status,
 })
 
 class App extends Component {
@@ -22,23 +25,24 @@ class App extends Component {
   }
 
   render() {
-    const { loading, active } = this.props
-    if (loading) {
-      return <p>ロード中です。</p>
-    } else if(active) {
-      return (
-        <div>
-          <Pages />
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <p>この実験の受け付けは終了しました。</p>
-          <p>次の実験をお待ちください。</p>
-        </div>
-      )
-    }
+    const { page, status } = this.props
+    return (
+      <div>
+        { (status != "noactive" || page == "result")
+          ? <div>
+              { (page == "waiting") ? <Waiting /> : null }
+              { (page == "description") ? <Description /> : null }
+              { (page == "experiment") ? <Question /> : null }
+              { (page == "result") ? <Result /> : null }
+            </div>
+          : <div>
+              <p>実験はすでに開始されています。</p>
+              <p>実験が終了するまでお待ちください。</p>
+            </div>
+          
+        }
+      </div>
+    )
   }
 }
 

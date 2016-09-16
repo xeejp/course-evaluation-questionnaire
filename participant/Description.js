@@ -1,19 +1,103 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {Card, CardText, CardTitle } from 'material-ui/Card'
-import {List, ListItem} from 'material-ui/List'
+import RaisedButton from 'material-ui/RaisedButton'
+import SwipeableViews from 'react-swipeable-views'
+import {Card, CardHeader, CardText} from 'material-ui/Card'
+import CircularProgress from 'material-ui/CircularProgress'
 
-const mapStateToProps = ({ question_text }) => ({
-  question_text
+import { finishDescription } from './actions'
+
+const mapStateToProps = ({text}) => ({
+  text
 })
 
-const Description = ({ question_text }) => (
-  <Card>
-    <CardTitle title="利用可能性ヒューリスティクス" subtitle="ルールの説明" />
-    <CardText>
-      {question_text['description_text'].split('\n').map( line => <p>{line}</p>)}
-    </CardText>
-  </Card>
-)
+class Description extends Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      slideIndex: 0,
+    }
+  }
+
+  handleSlideIndex(value) {
+    this.setState({
+      slideIndex: value,
+    })
+  }
+
+  handleNext() {
+    this.setState({
+      slideIndex: this.state.slideIndex + 1,
+    })
+  }
+
+  handleBack() {
+    this.setState({
+      slideIndex: this.state.slideIndex - 1,
+    })
+  }
+
+  componentWillMount() {
+  }
+
+  render() {
+    const { text } = this.props
+    if (this.state.slideIndex == this.props.text.descriptions.length) {
+      const { dispatch } = this.props
+      dispatch(finishDescription())
+	  console.log("finish11111")
+    }
+    return (
+      <div>
+        <Card style={{marginBottom: "5%"}}>
+          <SwipeableViews
+            index={this.state.slideIndex}
+            onChangeIndex={this.handleSlideIndex.bind(this)}
+          >
+            {
+              text.descriptions.map((description, index) => (
+                <div key={index}>
+                  <CardHeader
+                    title="説明"
+                    subtitle={(index+1) + "/" + (text.descriptions.length+1)}
+                  />
+                  <CardText expandable={false}>
+                    {description.text.split('\n').map( line => <p key={line}>{line}</p>)}
+                  </CardText>
+                </div>
+              ))
+            }
+            <div>
+              <CardHeader
+                title="説明"
+                subtitle={(text.descriptions.length)+1+"/"+(text.descriptions.length+1)}
+              />
+              <CardText expandable={false}>
+                <p>実験が開始されるまでしばらくお待ちください</p>
+                <div style={{textAlign: "center"}}>
+                  <CircularProgress />
+                </div>
+              </CardText>
+            </div>
+          </SwipeableViews>
+        </Card>
+        <RaisedButton 
+          label="戻る" 
+          style={{float: "left"}} 
+          onTouchTap={this.handleBack.bind(this)}
+          disabled={this.state.slideIndex == 0}
+        />
+        <RaisedButton
+          label="進む" 
+          style={{float: "right"}} 
+          onTouchTap={this.handleNext.bind(this)}
+          primary={true} 
+          disabled={this.state.slideIndex == text.descriptions.length}
+        />
+      </div>
+    )
+  }
+}
+
 export default connect(mapStateToProps)(Description)

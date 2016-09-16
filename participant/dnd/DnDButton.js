@@ -10,24 +10,14 @@ const mapStateToProps = ()=> {
 class DnDButton extends Component{
 
 	render(){
-		const { bst, next } = this.props;
-		if(bst ==0){
-			return (
-			<div>
-			<FlatButton style={{ marginLeft: '3%' }} disabled={true}  >戻る</FlatButton>
-			<RaisedButton primary={true} onClick={next()}style={{ marginLeft: '3%' }}>次へ</RaisedButton>
-	        </div>
-			);
-		}
-		else{
+		const { bst, next, array} = this.props;
 			return (
 			<div>
 			<FlatButton style={{ marginLeft: '3%' }} disabled={true}>戻る</FlatButton>
-			<RaisedButton primary={false} onClick={next()} disabled={true} style={{ marginLeft: '3%' }}>次へ</RaisedButton>
+			<RaisedButton primary={false} onClick={next.bind(this,array,bst)} style={{ marginLeft: '3%' }}>次へ</RaisedButton>
 	        </div>
 
 			);
-		}
 	}
 }
 

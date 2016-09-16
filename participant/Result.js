@@ -1,18 +1,25 @@
-﻿import React, { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchContents } from './actions'
 
 import Chart from 'components/Chart'
 
-const mapStateToProps = ({ one, two }) => ({
-  one, two
+const mapStateToProps = ({}) => ({
 })
 
-const Result = ({ one, two }) => (
-  <div>
-    <Chart one={one} two={two} expanded={true} />
-  </div>
-)
+class Result extends Component {
+	constructor(props, context) {
+		super(props, context)
+		this.state = {}
+	}
 
-export default connect(mapStateToProps)(Result)
+	render() {
+		return (
+			<div>
+			<Chart />
+			</div>
+				)
+			}
+}
+	export default connect(mapStateToProps)(Result)

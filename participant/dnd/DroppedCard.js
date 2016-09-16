@@ -91,7 +91,6 @@ DroppedCard.propTypes = {
 	text: PropTypes.string.isRequired,
 	dragDropCard: PropTypes.func.isRequired
 }
-export default connect(mapStateToProps)(DroppedCard)
 const x = DropTarget(ItemTypes.DRAGGED, cardTarget, dropCollect)(DroppedCard) 
 export default DragSource(ItemTypes.DRAGGED, cardSource, dragCollect)(x)
 

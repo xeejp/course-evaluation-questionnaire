@@ -63,6 +63,5 @@ Card.propTypes = {
     text: PropTypes.string.isRequired
 };
 
-export default connect()(Card)
 export default DragSource(ItemTypes.CARD, cardSource, dragCollect)(Card)
 

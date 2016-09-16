@@ -1,5 +1,5 @@
 module.exports = {
-  devtool: 'eval',
+  devtool: 'eval-source-map',
   entry: {
     host: ["babel-polyfill", "./host/index.js"],
     participant: ["babel-polyfill", "./participant/index.js"],
@@ -22,5 +22,13 @@ module.exports = {
     modulesDirectories: [
       "node_modules", "./"
     ]
-  }
+  },
+  plugins: [
+    function () {
+      this.plugin('watch-run', (watching, callback) => {
+        console.log('\033[36m' + '\033[36m' + 'Begin compile at ' + new Date() + ' \033[39m')
+        callback()
+      })
+    }
+  ]
 };

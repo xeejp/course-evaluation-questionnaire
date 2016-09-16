@@ -4,6 +4,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import createLogger from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -40,9 +41,9 @@ window.sendData = sendData
 
 render(
   <Provider store={store}>
-    <MuiThemeProvider>
+	<MuiThemeProvider>
       <App />
-    </MuiThemeProvider>
+	</MuiThemeProvider>
   </Provider>,
   document.getElementById("content")
 )

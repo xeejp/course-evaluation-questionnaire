@@ -1,24 +1,33 @@
-﻿import React, { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {Card, CardText, CardTitle } from 'material-ui/Card'
 import CircularProgress from 'material-ui/CircularProgress'
 
-const mapStateToProps = ({ joined, question_text }) => ({
-  joined, question_text
+const mapStateToProps = ({joined}) => ({
+  joined
 })
 
-const Waiting = ({ joined, question_text }) => (
-	<Card>
-		<CardTitle title="利用可能性ヒューリスティクス" subtitle="待機画面" />
-		<CardText>
-			{question_text['waiting_text'].split('\n').map( line => <p>{line}</p>)}
-			<p>現在{joined}人が参加しています。 </p>
-		</CardText>
-		<div style={{textAlign: "center"}}>
-			<CircularProgress size={2}/>
-		</div>
-	</Card>
-)
+class Waiting extends Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {}
+  }
+
+  componentDidMount() {
+  }
+
+  render() {
+    const { joined } = this.props
+    return (
+      <div>
+        <p>参加者の登録を待っています。(現在の参加者:{joined}人)</p>
+        <p>この画面のまましばらくお待ちください。</p>
+        <div style={{textAlign: "center"}}>
+          <CircularProgress />
+        </div>
+      </div>
+    )
+  }
+}
 
 export default connect(mapStateToProps)(Waiting)
