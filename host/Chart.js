@@ -36,42 +36,18 @@ class Chart extends Component {
 	makeData(){
 		const { answered, res } = this.props
 		let count = 0;
-		let chartData = new Array()
-		let axisPoint = new Array()
-		let x=0
-		let y=0
-		let addData = 0
-
-		for(let i=0; i<answered; i++){
-			axisPoint[i]=new Array(EvaluationAxis.length)
-			for(let d=0; d<EvaluationAxis.length; d++){
-				for(let j=0; j<EvaluationAxis.length; j++){
-					if(EvaluationAxis[d] == res[i][EvaluationAxis.length][j]){
-						axisPoint[i][d] = EvaluationAxis.length - j
-					}
-				}
-			}
-		}
-		
-		for(let i=0; i<answered; i++){
-			for(let d=0; d<EvaluationAxis.length; d++){
-				for(let j=0; j<Subjects.length; j++){
-					for(let g=0; g<Subjects.length; g++){
-						if(subjectsAxis[j] == res[i][d][g]){
-							chartData[addData] = new Array(3)
-							chartData[addData][0] = x 
-							chartData[addData][1] = y
-							chartData[addData][2] = (Subjects.length - g)*axisPoint[i][d]
-							x = (y+1==Subjects.length)? x+1 : x 
-							y = (y+1==Subjects.length)? 0 : y+1
-							addData++
-						}
-					}
-				}
-			}
-		}
-
-		console.log("ideyo!!!!:%s",JSON.stringify(chartData))
+		let	chartData = [
+			[0,0,300000],
+			[0,1,50],
+			[0,2,95],
+			[1,0,50],
+			[1,1,90],
+			[1,2,20],
+			[2,0,80],
+			[2,1,40],
+			[2,2,30],
+		]
+		console.log("ideyo!!!!:%s",JSON.stringify(res))
 		return(chartData)
 	}
 
@@ -223,6 +199,6 @@ class Chart extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(Chart)
+export default connect(mapStateToProps)(App)
 
 

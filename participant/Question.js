@@ -82,3 +82,4 @@ class Question extends Component {
 }
 
 export default connect(mapStateToProps)(Question)
+

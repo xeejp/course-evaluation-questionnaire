@@ -20,28 +20,12 @@ const style = {
 class Box extends Component{
 
 	render(){
-		const { Num, Len } = this.props;
-		if(Num < Len){
 			return (
 				<div style={{...style }}>
-				<p>Question{Num+1} {EvaluationAxis[Num]}</p>
+				<p>prease sort your evaluation axis</p>
 				{this.props.children}
 				</div>
 			);
-		}
-		if(Num == Len){
-			return (
-				<div style={{...style }}>
-				<p>sort Evaluation Axis</p>
-				{this.props.children}
-				</div>
-			);
-		}
-		else{
-			return (
-			<p>dnd is finished </p>
-			)
-		}
 
 	}
 }
