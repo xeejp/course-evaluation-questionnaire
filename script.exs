@@ -13,6 +13,8 @@ defmodule YourApplication do
     {:ok, %{"data" => %{
        page: "waiting",
        participants: %{},
+       teachers: %{},
+       join_teacher: 0,
        res: %{},
        red_description: 0,
        joined: 0,
@@ -70,7 +72,24 @@ defmodule YourApplication do
     end
   end
 
-
+  def handle_received(data, %{"action" => "join teacher", "params" => params}, id) do
+    data = %{ data | teachers: Map.put(data.teachers, Integer.to_string(data.join_teacher), params)}
+    data = %{ data | join_teacher: data.join_teacher + 1 }
+     host_action = %{
+         type: "JOIN_TEACHER",
+        teachers: data.teachers,
+          join_teacher: data.join_teacher
+      }
+    participant_action = Enum.map(data.participants, fn {id, _} ->
+      {id, %{action: 
+        %{
+          type: "JOIN_TEACHER",
+          teachers: data.teachers,
+          join_teacher: data.join_teacher
+        }
+      }} end)
+  {:ok, %{"data" => data, "participant" => participant_action}}
+  end
   def handle_received(data, %{"action" => "change page", "params" => params}) do
     data = %{data | page: params}
     unless data.page == "result" do

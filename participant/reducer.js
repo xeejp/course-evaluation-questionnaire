@@ -1,3 +1,16 @@
+const initialState = {
+	page: "waiting",
+	users: {},
+	red_description: 0,
+	answered: 0,
+	joined: 0,
+	teachers: {},
+	join_teacher: 0,
+	
+
+}
+
+
 function reducer(state = {}, action) {
 	const { type, payload } = action
 	switch (type) {
@@ -29,6 +42,11 @@ function reducer(state = {}, action) {
 				joined: action.joined,
 				answered: action.answered,
 				res: action.res,
+			})
+		case "JOIN_TEACHER":
+			return Object.assign({}, state, {
+				teachers: action.teachers,
+				join_teacher: action.join_teacher,
 			})
 
 		default:
