@@ -16,9 +16,11 @@ defmodule YourApplication do
        teachers: %{},
        join_teacher: 0,
        res: %{},
+       teacher_res: %{},
        red_description: 0,
        joined: 0,
        answered: 0,
+       teacher_count: 0,
        text: %{
          descriptions: [
            %{ id: 0, text: "授業評価アンケートです。", },
@@ -171,6 +173,27 @@ defmodule YourApplication do
     {:ok, %{"data" => data, "host" => %{action: action}}}
    end
 
+   def handle_received( data, %{ "action" => "teacher submit answer" , "params" => params}, id ) do
+      data = %{ data | teacher_res: Map.put(data.teacher_res, Integer.to_string(data.teacher_count), params)}
+      data = %{ data | teacher_count: data.teacher_count + 1 }
+      data = %{ data | answered: data.answered + 1 }
+      host_action = %{
+        type: "TEACHER_SUBMIT_ANSWER",
+        users: data.participants,
+        answered: data.answered,
+        joined: data.joined,
+      }
+    participant_action = Enum.map(data.participants, fn {id, _} ->
+      {id, %{action: 
+          %{
+            type: "TEACHER_SUBMIT_ANSWER",
+            answered: data.answered,
+            joined: data.joined,
+            teacher_res: data.teacher_res
+          }
+     }} end)
+ {:ok, %{"data" => data, "host" => %{action: host_action}, "participant" => participant_action}}
+  end
    def handle_received( data, %{ "action" => "submit answer" , "params" => params}, id ) do
       data = %{ data | res: Map.put(data.res, Integer.to_string(data.answered), params)}
       data = %{ data | answered: data.answered + 1 }

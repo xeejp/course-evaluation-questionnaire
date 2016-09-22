@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import CircularProgress from 'material-ui/CircularProgress'
 
 
-const mapStateToProps = ({joined, answered, res }) => ({
-		joined,
+const mapStateToProps = ({joined, answered, res, teacher_res }) => ({
+	joined,
 		answered,
 		res,
+		teacher_res,
 })
 
 class EndQuestion extends Component {
@@ -21,15 +22,17 @@ class EndQuestion extends Component {
 	}
 
 	render() {
-		const { joined, answered, res } = this.props
+		const { joined, answered, res, teacher_res} = this.props
 		const resst = JSON.stringify(res,null,'\t')
+		const tResult = JSON.stringify(teacher_res,null,'\t')
 		return (
 			<div>
 			<p>実験が終了しました。(回答中:残り{joined-answered}人)</p>
 			<p>全員が回答し終わるまで、この画面のまましばらくお待ちください。</p>
 			<p>joined {joined}</p>
 			<p>answered {answered}</p>
-			<div>{resst}</div>
+			<div>students:{resst}</div>
+			<div>teachers:{tResult}</div>
 			<div style={{textAlign: "center"}}>
 			<CircularProgress />
 			</div>

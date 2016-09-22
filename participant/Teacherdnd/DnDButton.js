@@ -10,9 +10,14 @@ const mapStateToProps = ()=> {
 class DnDButton extends Component{
 
 	render(){
+		const { teacherCounter, teacherArray} = this.props
 			return (
 			<div>
-			<RaisedButton primary={false}  style={{ marginLeft: '3%' }}>回答する</RaisedButton>
+			<RaisedButton 
+				primary={false}  
+				style={{ marginLeft: '3%' }}
+				onClick = {teacherCounter.bind(this,teacherArray)}
+			>回答する</RaisedButton>
 	        </div>
 
 			);

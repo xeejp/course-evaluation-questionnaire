@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import update from 'react/lib/update'
-import Dcard from './dnd/card'
-import Box from './dnd/Box'
-import DroppedCard from './dnd/DroppedCard'
-import MiniBox from './dnd/MiniBox'
-import Subjects from './dnd/Subjects'
-import DnDButton from './dnd/DnDButton'
-import EvaluationAxis from './dnd/EvaluationAxis'
+import Dcard from './Teacherdnd/card'
+import Box from './Teacherdnd/Box'
+import DroppedCard from './Teacherdnd/DroppedCard'
+import MiniBox from './Teacherdnd/MiniBox'
+import Subjects from './Teacherdnd/Subjects'
+import DnDButton from './Teacherdnd/DnDButton'
+import EvaluationAxis from './Teacherdnd/EvaluationAxis'
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -76,14 +76,9 @@ class DnD extends Component {
 
 
 	render() {
+		const {Num, teacherCounter } = this.props
 		return (
-      <Card>
-        <CardHeader
-          title={"教師実験"}
-          actAsExpander={true}
-          showExpandableButton={true}
-        />
-        <CardText expandable={true}>
+
 
 
 
@@ -107,7 +102,7 @@ class DnD extends Component {
 			)
 			}
 			</Box>
-			<DnDButton />
+			<DnDButton Num={Num} teacherCounter={teacherCounter} teacherArray={array}/>
 			</div>
 			<div style={{  float: 'right'}}>
 			{dndData.map((card, i) => <Dcard
@@ -123,8 +118,6 @@ class DnD extends Component {
 
 
 
-			        </CardText>
-      </Card>
 		);
 
 	}

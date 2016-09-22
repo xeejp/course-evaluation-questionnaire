@@ -12,11 +12,13 @@ const mapStateToProps = ({page, status}) => ({
   page,
   status,
 })
+let isTeacher = false
 
 class App extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {}
+	this.teacherForm = this.teacherForm.bind(this)
   }
 
   componentDidMount() {
@@ -24,15 +26,21 @@ class App extends Component {
     dispatch(fetchContents())
   }
 
+  teacherForm(){
+	  isTeacher = true
+  }
+
+
+
   render() {
     const { page, status } = this.props
     return (
       <div>
         { (status != "noactive" || page == "result")
           ? <div>
-              { (page == "waiting") ? <Waiting /> : null }
+              { (page == "waiting") ? <Waiting teacherForm={this.teacherForm}/> : null }
               { (page == "description") ? <Description /> : null }
-              { (page == "experiment") ? <Question /> : null }
+              { (page == "experiment") ? <Question isTeacher={isTeacher}/> : null }
               { (page == "result") ? <Result /> : null }
             </div>
           : <div>

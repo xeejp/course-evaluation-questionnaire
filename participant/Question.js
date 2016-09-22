@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 
 
 import DnD from './DnD'
+import TeacherDnD from './TeacherDnD'
 import EvaluationAxis from './dnd/EvaluationAxis'
 import EndQuestion from './EndQuestion'
 import Subjects from './dnd/Subjects'
-import { submitAnswer } from './actions'
+import { submitAnswer, teacherSubmitAnswer  } from './actions'
 
 
 const mapStateToProps = ({}) => ({
@@ -21,6 +22,7 @@ class Question extends Component {
 	constructor(props, context) {
 		super(props, context)
 		this.dataBarn = this.dataBarn.bind(this)
+		this.teacherCounter = this.teacherCounter.bind(this)
 		this.state = {}
 	}
 
@@ -60,26 +62,54 @@ class Question extends Component {
 		console.log("DnDResult : %s",JSON.stringify(DnDResult,null,'\t'))
 	}
 
+	teacherCounter(teacherArray){
+		let teacherResult = new Object()
+		Num = Num+1
+		for(let i=0; i<EvaluationAxis.length; i++){
+			teacherResult[i] = teacherArray[i][1]
+		}
+		console.log("teacherArray:%s",JSON.stringify(teacherResult))
+		const { dispatch } = this.props
+		dispatch(teacherSubmitAnswer(JSON.parse(JSON.stringify(teacherResult))))
+		this.setState(ddt)
+	}
+
 
 	render() {
-		const { } = this.props
-		if(Num <  EvaluationAxis.length + 1){
-			return <div>
-			<DnD 
-			EvaluationAxis = {EvaluationAxis}
-			Len = {Len}
-			Num = {Num}
-			dataBarn= {this.dataBarn}
-			/>
-			</div>
+		const { isTeacher } = this.props
+		if(isTeacher){
+			if(Num ==0 ){
+				return(
+					<TeacherDnD	
+						Num = {Num}
+						teacherCounter = {this.teacherCounter}
+					/>
+				)
+			}
+			else{
+				return(
+					<EndQuestion />
+				)
+			}
 		}
-		else {
-			return (
-				<EndQuestion />
-			)
+		else{
+			if(Num <  EvaluationAxis.length + 1){
+				return <div>
+				<DnD 
+				EvaluationAxis = {EvaluationAxis}
+				Len = {Len}
+				Num = {Num}
+				dataBarn= {this.dataBarn}
+				/>
+				</div>
+			}
+			else {
+				return (
+					<EndQuestion />
+				)
+			}
 		}
 	}
 }
-
 export default connect(mapStateToProps)(Question)
 

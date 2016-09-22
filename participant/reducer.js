@@ -6,6 +6,7 @@ const initialState = {
 	joined: 0,
 	teachers: {},
 	join_teacher: 0,
+	teacher_res: {},
 	
 
 }
@@ -42,6 +43,12 @@ function reducer(state = {}, action) {
 				joined: action.joined,
 				answered: action.answered,
 				res: action.res,
+			})
+		case "TEACHER_SUBMIT_ANSWER":
+			return Object.assign({}, state, {
+				joined: action.joined,
+				answered: action.answered,
+				teacher_res: action.teacher_res,
 			})
 		case "JOIN_TEACHER":
 			return Object.assign({}, state, {

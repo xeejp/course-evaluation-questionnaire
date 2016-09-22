@@ -41,7 +41,7 @@ class Waiting extends Component {
 		this.setState({ value })
   	}
 	handleClick(){
-		const { dispatch ,teachers , answered, join_teacher} = this.props
+		const { dispatch ,teachers , answered, join_teacher, teacherForm} = this.props
 		const { value } = this.state
 		switch(value){
 			case "aaa":
@@ -55,6 +55,7 @@ class Waiting extends Component {
 				break
 		}
 		console.log(join_teacher)
+		teacherForm()
 		this.setState({
 			value: '',
 		})

@@ -7,7 +7,6 @@ import { fetchContents } from './actions'
 
 import PageStepper from './PageStepper'
 import Users from './Users'
-import DnD from './DnD'
 
 const mapStateToProps = ({page}) => ({
 	page
@@ -37,7 +36,6 @@ class App extends Component {
           }}
         />
         <Users /><br />
-		<DnD /><br />
       </div>
     )
   }

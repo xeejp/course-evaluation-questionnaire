@@ -1,5 +1,5 @@
 import { put, take, call, fork } from 'redux-saga/effects'
-import { fetchContents, submitAnswer, finishDescription, joinTeacher } from './actions'
+import { fetchContents, submitAnswer, finishDescription, joinTeacher, teacherSubmitAnswer  } from './actions'
 
 function* fetchContentsSaga() {
   while (true) {
@@ -23,6 +23,12 @@ function* submitAnswerSaga() {
   }
 }
 
+function* teacherSubmitAnswerSaga() {
+  while (true) {
+    const { payload } = yield take(`${submitAnswer}`)
+    yield call(sendData, 'teacher submit answer', payload)
+  }
+}
 function* joinTeacherSaga() {
   while (true) {
     const { payload } = yield take(`${joinTeacher}`)
@@ -34,6 +40,7 @@ function* saga() {
   yield fork(fetchContentsSaga)
   yield fork(finishDescriptionSaga)
   yield fork(submitAnswerSaga)
+  yield fork(teacherSubmitAnswerSaga)
   yield fork(joinTeacherSaga)
 }
 
