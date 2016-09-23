@@ -25,7 +25,7 @@ function* submitAnswerSaga() {
 
 function* teacherSubmitAnswerSaga() {
   while (true) {
-    const { payload } = yield take(`${submitAnswer}`)
+    const { payload } = yield take(`${teacherSubmitAnswer}`)
     yield call(sendData, 'teacher submit answer', payload)
   }
 }
