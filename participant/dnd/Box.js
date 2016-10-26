@@ -1,49 +1,49 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import EvaluationAxis from './EvaluationAxis'
+import React, { Component } from 'react'
+import {Card, CardHeader} from 'material-ui/Card'
+import EvaluationAxis from 'util/EvaluationAxis'
 
 const mapStateToProps = ()=> {
 }
 
 const style = {
-  border: '1px dashed gray',
-  height: 200,
-  width: '400',
-  marginRight: '1.5rem',
-  marginBottom: '1.5rem',
-  textAlign: 'center',
-  fontSize: '1rem',
-  lineHeight: 'normal',
-  position: 'relative',
+	padding: '0.5rem 1rem',
+	marginBottom: '.5rem',
+	textAlign: 'center',
 }
 
 class Box extends Component{
-
 	render(){
-		const { Num, Len } = this.props;
-		if(Num < Len){
+		const { Num } = this.props
+		if(Num < EvaluationAxis.length){
 			return (
 				<div style={{...style }}>
-				<p>Question{Num+1} {EvaluationAxis[Num]}</p>
+				<Card style={{backgroundColor: '#B2EBF2'}}>
+				<CardHeader
+				title={EvaluationAxis[Num]}
+				/>
+				</Card>
 				{this.props.children}
 				</div>
 			);
 		}
-		if(Num == Len){
+		if(Num == EvaluationAxis.length){
 			return (
 				<div style={{...style }}>
-				<p>sort Evaluation Axis</p>
+				<Card style={{backgroundColor: '#B2EBF2'}}>
+				<CardHeader
+				title="Sort Evaluation Axis"
+				/>
+				</Card>
 				{this.props.children}
 				</div>
 			);
 		}
 		else{
 			return (
-			<p>dnd is finished </p>
+				<p>dnd is finished (printed by Box.js)</p>
 			)
 		}
-
 	}
 }
 
-export default connect()(Box)
+export default Box

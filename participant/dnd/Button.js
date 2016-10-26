@@ -7,21 +7,20 @@ import RaisedButton from 'material-ui/RaisedButton'
 const mapStateToProps = ()=> {
 }
 
-class DnDButton extends Component{
-
+class Button extends Component{
 	render(){
-		const { bst, next, array} = this.props;
+			const { next, array} = this.props;
 			return (
 			<div>
 			<FlatButton style={{ marginLeft: '3%' }} disabled={true}>戻る</FlatButton>
-			<RaisedButton primary={false} onClick={next.bind(this,array,bst)} style={{ marginLeft: '3%' }}>次へ</RaisedButton>
+			<RaisedButton  onClick={next.bind(this,array)} primary={true} style={{ marginLeft: '3%' }}>次へ</RaisedButton>
 	        </div>
-
 			);
-	}
+
+}
 }
 
-export default connect()(DnDButton)
+export default connect()(Button)
 
 
 

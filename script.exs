@@ -13,21 +13,14 @@ defmodule YourApplication do
     {:ok, %{"data" => %{
        page: "waiting",
        participants: %{},
-       teachers: %{},
-       join_teacher: 0,
        res: %{},
-       teacher_res: %{},
-       red_description: 0,
+       t_res: %{},
+       join_teacher: %{},
        joined: 0,
        answered: 0,
-       teacher_count: 0,
-       text: %{
-         descriptions: [
-           %{ id: 0, text: "授業評価アンケートです。", },
-           %{ id: 1, text: "評価軸ごとに順位を入れ替えましょう。", },
-           %{ id: 2, text: "正直に答えてね。", },
-         ],
-       },
+       teacher_answered: 0,
+       student_answered: 0,
+       teachers: 0,
      }}}
   end
 
@@ -74,24 +67,7 @@ defmodule YourApplication do
     end
   end
 
-  def handle_received(data, %{"action" => "join teacher", "params" => params}, id) do
-    data = %{ data | teachers: Map.put(data.teachers, Integer.to_string(data.join_teacher), params)}
-    data = %{ data | join_teacher: data.join_teacher + 1 }
-     host_action = %{
-         type: "JOIN_TEACHER",
-        teachers: data.teachers,
-          join_teacher: data.join_teacher
-      }
-    participant_action = Enum.map(data.participants, fn {id, _} ->
-      {id, %{action: 
-        %{
-          type: "JOIN_TEACHER",
-          teachers: data.teachers,
-          join_teacher: data.join_teacher
-        }
-      }} end)
-  {:ok, %{"data" => data, "participant" => participant_action}}
-  end
+
   def handle_received(data, %{"action" => "change page", "params" => params}) do
     data = %{data | page: params}
     unless data.page == "result" do
@@ -159,44 +135,10 @@ defmodule YourApplication do
     {:ok, %{"data" => data, "participant" => %{id => %{action: action}}}}
   end
 
-   def handle_received(data, %{"action" => "finish description"}, id) do
-    Logger.debug "finish description"
-    unless data.participants[id].is_red_description do
-      data = %{data | red_description: data.red_description+1}
-      data = put_in(data.participants[id].is_red_description, true)
-    end
-    action = %{
-      type: "FINISH_DESCRIPTION",
-      red_description: data.red_description,
-      users: data.participants,
-    }
-    {:ok, %{"data" => data, "host" => %{action: action}}}
-   end
-
-   def handle_received( data, %{ "action" => "teacher submit answer" , "params" => params}, id ) do
-      data = %{ data | teacher_res: Map.put(data.teacher_res, Integer.to_string(data.teacher_count), params)}
-      data = %{ data | teacher_count: data.teacher_count + 1 }
+     def handle_received( data, %{ "action" => "submit answer" , "params" => params}, id ) do
+      data = %{ data | res: Map.put(data.res, Integer.to_string(data.student_answered), params)}
       data = %{ data | answered: data.answered + 1 }
-      host_action = %{
-        type: "TEACHER_SUBMIT_ANSWER",
-        users: data.participants,
-        answered: data.answered,
-        joined: data.joined,
-      }
-    participant_action = Enum.map(data.participants, fn {id, _} ->
-      {id, %{action: 
-          %{
-            type: "TEACHER_SUBMIT_ANSWER",
-            answered: data.answered,
-            joined: data.joined,
-            teacher_res: data.teacher_res
-          }
-     }} end)
- {:ok, %{"data" => data, "host" => %{action: host_action}, "participant" => participant_action}}
-  end
-   def handle_received( data, %{ "action" => "submit answer" , "params" => params}, id ) do
-      data = %{ data | res: Map.put(data.res, Integer.to_string(data.answered), params)}
-      data = %{ data | answered: data.answered + 1 }
+      data = %{ data | student_answered: data.student_answered + 1 }
       host_action = %{
         type: "SUBMIT_ANSWER",
         users: data.participants,
@@ -207,6 +149,7 @@ defmodule YourApplication do
       {id, %{action: 
           %{
             type: "SUBMIT_ANSWER",
+            student_answered: data.student_answered,
             answered: data.answered,
             joined: data.joined,
             res: data.res
@@ -215,8 +158,47 @@ defmodule YourApplication do
  {:ok, %{"data" => data, "host" => %{action: host_action}, "participant" => participant_action}}
   end
 
+  def handle_received( data, %{ "action" => "teacher submit answer" , "params" => params}, id ) do
+      data = %{ data | t_res: Map.put(data.t_res, Integer.to_string(data.teacher_answered), params)}
+      data = %{ data | answered: data.answered + 1 }
+      data = %{ data | teacher_answered: data.teacher_answered + 1 }
+      host_action = %{
+        type: "TEACHER_SUBMIT_ANSWER",
+        users: data.participants,
+        answered: data.answered,
+        joined: data.joined,
+      }
+    participant_action = Enum.map(data.participants, fn {id, _} ->
+      {id, %{action: 
+          %{
+            type: "TEACHER_SUBMIT_ANSWER",
+            teacher_answered: data.teacher_answered,
+            joined: data.joined,
+            t_res: data.t_res,
+          }
+     }} end)
+ {:ok, %{"data" => data, "host" => %{action: host_action}, "participant" => participant_action}}
+  end
 
 
+    def handle_received(data, %{"action" => "join teacher", "params" => params}, id) do
+    data = %{ data | teachers: Map.put(data.teachers, Integer.to_string(data.join_teacher), params)}
+    data = %{ data | join_teacher: data.join_teacher + 1 }
+     host_action = %{
+         type: "JOIN_TEACHER",
+        teachers: data.teachers,
+          join_teacher: data.join_teacher
+      }
+    participant_action = Enum.map(data.participants, fn {id, _} ->
+      {id, %{action: 
+        %{
+          type: "JOIN_TEACHER",
+          teachers: data.teachers,
+          join_teacher: data.join_teacher
+        }
+      }} end)
+  {:ok, %{"data" => data, "participant" => participant_action}}
+  end
   def handle_received(data, _action, _id) do
     {:ok, %{"data" => data}}
   end

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Card, CardHeader, CardText } from 'material-ui/Card'
+import { Card, CardHeader, CardText, CardTitle } from 'material-ui/Card'
 import CircularProgress from 'material-ui/CircularProgress'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -9,13 +9,18 @@ import TextField from 'material-ui/TextField'
 
 import { joinTeacher } from './actions'
 
-
 const mapStateToProps = ({joined, teachers, answered, join_teacher }) => ({
 	joined,
 	teachers,
 	answered,
 	join_teacher
 })
+
+const style = {
+	padding: '0.5rem 1rem',
+	marginBottom: '.2rem',
+	textAlign:'left',
+}
 
 class Waiting extends Component {
 	constructor(props, context) {
@@ -33,29 +38,32 @@ class Waiting extends Component {
 		this.setState({ expanded: expanded })
 	}
 
-	componentDidMount() {
-	}
+  componentDidMount() {
+  }
 
-	handleChange(event) {
+		handleChange(event) {
 		const value = event.target.value
 		this.setState({ value })
   	}
+
 	handleClick(){
-		const { dispatch ,teachers , answered, join_teacher, teacherForm} = this.props
+		const { dispatch ,teachers , answered, join_teacher, teacherForm } = this.props
 		const { value } = this.state
 		switch(value){
 			case "aaa":
 				dispatch(joinTeacher("math"))
+				teacherForm()
 				break
 			case "bbb":
 				dispatch(joinTeacher("english"))
+				teacherForm()
 				break
 			case "ccc":
-				dispatch(joinTeacher("art"))
+				dispatch(joinTeacher("music"))
+				teacherForm()
 				break
 		}
 		console.log(join_teacher)
-		teacherForm()
 		this.setState({
 			value: '',
 		})
@@ -69,9 +77,17 @@ class Waiting extends Component {
 			<div>
 			<p>join_teacher:{join_teacher}</p>
 			<p>{dt}</p>
-			<p>参加者の登録を待っています。(現在の参加者:{joined}人)</p>
+			<Card>
+			<CardTitle
+				title="授業評価アンケート"
+				subtitle="待機画面"
+			/>
+			<CardText>
+			<p>参加者の登録を待っています。</p>
 			<p>この画面のまましばらくお待ちください。</p>
-			<div>
+			<p>現在{joined}人が参加しています。</p>
+			</CardText>
+			<div style={{ ...style}}>
 			<Card
 			expanded={this.state.expanded}
 			onExpandChange={this.handleExpandChange.bind(this)}
@@ -100,6 +116,7 @@ class Waiting extends Component {
 			<div style={{textAlign: "center"}}>
 			<CircularProgress />
 			</div>
+			</Card>
 			</div>
 		)
 

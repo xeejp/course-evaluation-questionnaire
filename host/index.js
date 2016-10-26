@@ -14,7 +14,6 @@ import App from './App.js'
 
 import saga from './saga'
 import reducer from './reducer'
-import { getPage } from 'util/index'
 
 const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware()

@@ -1,22 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import reactCSS from 'reactcss'
 
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 
-const mapStateToProps = ({page, users, text, joined, answered, red_description}) => ({
+const mapStateToProps = ({page, users, text, joined, answered}) => ({
   page,
   users,
   text,
   joined, 
   answered, 
-  red_description,
 })
 
 function createHeaderInfoStr(page, joined, answered, red_description) {
   switch (page) {
-    case "description":
-      return "("+red_description+"人が説明を読み終えました)"
     case "experiment":
       return "("+answered+"人が回答を済ませました)"
     default:
@@ -25,54 +21,24 @@ function createHeaderInfoStr(page, joined, answered, red_description) {
 }
 
 function createUserStatuStr(user, page, text) {
-  const style = reactCSS({
-    'default': {
-      selected: {
-        color: '#000000',
-      },
-      nonselect: {
-        color: '#DCDCDC',
-      }
-    }
-  })
-
   switch (page) {
     case "description":
       return (
         <span>
-          {
-            user.is_red_description
-            ? <span style={ style.selected }>既読</span>
-            : <span style={ style.nonselect }>既読</span>
-          }
-          <span>・</span>
-          {
-            !user.is_red_description
-            ? <span style={ style.selected }>未読</span>
-            : <span style={ style.nonselect }>未読</span>
-          }
+		  説明画面
         </span>
       )
-    case "experiment": case "result":
+	case "experiment":
+	　return (
+		<span>
+		　回答中 
+	　　</span>
+		  )
+	
+	case "result":
       return (
         <span>
-          {
-            user.status == "a"
-            ? <span style={ style.selected }>{text.answers[0]}</span>
-            : <span style={ style.nonselect }>{text.answers[0]}</span>
-          }
-          <span>・</span>
-          {
-            user.status == "b"
-            ? <span style={ style.selected }>{text.answers[1]}</span>
-            : <span style={ style.nonselect }>{text.answers[1]}</span>
-          }
-          <span>・</span>
-          {
-            user.status == "each"
-            ? <span style={ style.selected }>{text.answers[2]}</span>
-            : <span style={ style.nonselect }>{text.answers[2]}</span>
-          }
+  　　　　実験終了
         </span>
       )
     default:

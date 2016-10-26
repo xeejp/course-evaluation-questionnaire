@@ -6,26 +6,15 @@ import Highcharts from 'react-highcharts'
 import  heatmap from 'highcharts/modules/heatmap'
 import exporting from 'highcharts/modules/exporting'
 
-import Subjects from 'participant/dnd/Subjects'
-import EvaluationAxis from 'participant/dnd/EvaluationAxis'
-
 heatmap(Highcharts.Highcharts)
 exporting(Highcharts.Highcharts)
 
-const mapStateToProps = ({ answered, res }) => ({answered, res })
-
-const subjectsAxis = new Array()
-for(let i=0; i<Subjects.length; i++){
-	subjectsAxis[i] = Subjects[i][1]
-}
-
-
+const mapStateToProps = ({ }) => ({ })
 
 class Chart extends Component {
 	constructor(props) {
 		super(props)
 		const { expanded } = this.props
-		this.makeData = this.makeData.bind(this)
 		this.state = { expanded: expanded }
 	}
 
@@ -33,57 +22,14 @@ class Chart extends Component {
 		this.setState({ expanded: expanded })
 	}
 
-	makeData(){
-		const { answered, res } = this.props
-		let count = 0;
-		let chartData = new Array()
-		let axisPoint = new Array()
-		let x=0
-		let y=0
-		let addData = 0
-
-		for(let i=0; i<answered; i++){
-			axisPoint[i]=new Array(EvaluationAxis.length)
-			for(let d=0; d<EvaluationAxis.length; d++){
-				for(let j=0; j<EvaluationAxis.length; j++){
-					if(EvaluationAxis[d] == res[i][EvaluationAxis.length][j]){
-						axisPoint[i][d] = EvaluationAxis.length - j
-					}
-				}
-			}
-		}
-		
-		for(let i=0; i<answered; i++){
-			for(let d=0; d<EvaluationAxis.length; d++){
-				for(let j=0; j<Subjects.length; j++){
-					for(let g=0; g<Subjects.length; g++){
-						if(subjectsAxis[j] == res[i][d][g]){
-							chartData[addData] = new Array(3)
-							chartData[addData][0] = x 
-							chartData[addData][1] = y
-							chartData[addData][2] = (Subjects.length - g)*axisPoint[i][d]
-							x = (y+1==Subjects.length)? x+1 : x 
-							y = (y+1==Subjects.length)? 0 : y+1
-							addData++
-						}
-					}
-				}
-			}
-		}
-
-		console.log("ideyo!!!!:%s",JSON.stringify(chartData))
-		return(chartData)
-	}
-
 	render() {
 		return (
-			<div>
 			<Card
 			expanded={this.state.expanded}
 			onExpandChange={this.handleExpandChange.bind(this)}
 			>
 			<CardHeader
-			title={"実験結果"}
+			title={"experiment result"}
 			actAsExpander={true}
 			showExpandableButton={true}
 			/>
@@ -100,15 +46,15 @@ class Chart extends Component {
 
 
 					title: {
-						text: 'Students'
+						text: 'Sales per employee per weekday'
 					},
 
 					xAxis: {
-						categories: EvaluationAxis
+						categories: ['Alexander', 'Marie', 'Maximilian', 'Sophia', 'Lukas', 'Maria', 'Leon', 'Anna', 'Tim', 'Laura']
 					},
 
 					yAxis: {
-						categories: subjectsAxis,
+						categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
 						title: null
 					},
 
@@ -137,77 +83,7 @@ class Chart extends Component {
 					series: [{
 						name: 'Sales per employee',
 						borderWidth: 1,
-						data: this.makeData(),
-
-						dataLabels: {
-							enabled: true,
-							color: '#000000'
-						}
-					}]
-				}
-		} />
-
-
-			<Highcharts config={
-				{
-
-					chart: {
-						type: 'heatmap',
-						marginTop: 40,
-						marginBottom: 80,
-						plotBorderWidth: 1
-					},
-
-
-					title: {
-						text: 'Teacher'
-					},
-
-					xAxis: {
-						categories: EvaluationAxis
-					},
-
-					yAxis: {
-						categories: subjectsAxis,
-						title: null
-					},
-
-					colorAxis: {
-						min: 0,
-						minColor: '#FFFFFF',
-						maxColor: '#00BFFF',
-					},
-
-					legend: {
-						align: 'right',
-						layout: 'vertical',
-						margin: 0,
-						verticalAlign: 'top',
-						y: 25,
-						symbolHeight: 280
-					},
-
-					tooltip: {
-						formatter: function () {
-							return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-								this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
-						}
-					},
-
-					series: [{
-						name: 'Sales per employee',
-						borderWidth: 1,
-						data: [[0,0,90],
-								[0,1,50],
-								[0,2,30],
-								[1,0,50],
-								[1,1,90],
-								[1,2,20],
-								[2,0,40],
-								[2,1,80],
-								[2,2,30],
-						],
-
+						data: [[0, 0, 10], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52], [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], [9, 2, 31], [9, 3, 48], [9, 4, 91]],
 						dataLabels: {
 							enabled: true,
 							color: '#000000'
@@ -218,11 +94,9 @@ class Chart extends Component {
 
 			</CardText>
 			</Card>
-			</div>
 		)
 	}
 }
 
 export default connect(mapStateToProps)(Chart)
-
 

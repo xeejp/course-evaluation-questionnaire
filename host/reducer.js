@@ -2,20 +2,9 @@ const initialState = {
 	page: "waiting",
 	users: {},
 	red_description: 0,
+	student_answered: 0,
 	answered: 0,
 	joined: 0,
-	text: {
-    descriptions: [
-      {id: 0, text: "説明1",},
-      {id: 1, text: "説明2",},
-      {id: 2, text: "説明3",},
-      ],
-	  answers: [
-      "プログラマ",
-      "銀行員",
-      "プログラマで自然保護活動家",
-    ]
-	}
 }
 
 function reducer(state = initialState, action) {
@@ -35,11 +24,20 @@ function reducer(state = initialState, action) {
 				answered: action.answered,
 				joined: action.joined,
 			})
-		case "FINISH_DESCRIPTION":
-      return Object.assign({}, state, {
-        users: action.users,
-        red_description: action.red_description,
-      })
+		case "SUBMIT_ANSWER":
+			return Object.assign({}, state, {
+				joined: action.joined,
+				student_answered: action.student_answered,
+				answered: action.answered,
+				res: action.res,
+			})
+		case "TEACHER_SUBMIT_ANSWER":
+			return Object.assign({}, state, {
+				joined: action.joined,
+				teacher_answered: action.teacher_answered,
+				answered: action.answered,
+				res: action.res,
+			})
 
 		default:
 			return state

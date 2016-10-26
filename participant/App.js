@@ -8,10 +8,11 @@ import Description from './Description'
 import Question from './Question'
 import Result from './Result'
 
-const mapStateToProps = ({page, status}) => ({
-  page,
-  status,
+
+const mapStateToProps = ({page}) => ({
+	page
 })
+
 let isTeacher = false
 
 class App extends Component {
@@ -30,13 +31,11 @@ class App extends Component {
 	  isTeacher = true
   }
 
-
-
   render() {
-    const { page, status } = this.props
+    const {page} = this.props
     return (
       <div>
-        { (status != "noactive" || page == "result")
+		{ (status != "noactive" || page == "result")
           ? <div>
               { (page == "waiting") ? <Waiting teacherForm={this.teacherForm}/> : null }
               { (page == "description") ? <Description /> : null }

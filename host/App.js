@@ -8,8 +8,7 @@ import { fetchContents } from './actions'
 import PageStepper from './PageStepper'
 import Users from './Users'
 
-const mapStateToProps = ({page}) => ({
-	page
+const mapStateToProps = ({}) => ({
 })
 
 class App extends Component {
@@ -24,36 +23,19 @@ class App extends Component {
   }
 
   render() {
-	  const { page } = this.props
-	  if(page == "experiment"){
     return (
       <div>
-        <PageStepper />
-        <Divider
+		       <PageStepper />
+		       <Divider
           style={{
             marginTop: '5%',
             marginBottom: '5%',
           }}
         />
-        <Users /><br />
+		  <Users /><br />
       </div>
     )
   }
-	  else{
-		      return (
-      <div>
-        <PageStepper />
-        <Divider
-          style={{
-            marginTop: '5%',
-            marginBottom: '5%',
-          }}
-        />
-        <Users /><br />
-      </div>
-    )
-	  }
-}
 }
 
 export default connect(mapStateToProps)(App)
